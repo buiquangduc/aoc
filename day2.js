@@ -2534,23 +2534,23 @@ parsedData.forEach(round => {
     if(yourChoice.is(rock)) {
         totalScore1 += rockPoint
 
-        if(opponentChoice.is(rock)) totalScore1 += 3
-        if(opponentChoice.is(paper)) totalScore1 += 0
-        if(opponentChoice.is(scissors)) totalScore1 += 6
+        if(opponentChoice.is(rock)) totalScore1 += drawPoint
+        if(opponentChoice.is(paper)) totalScore1 += losePoint
+        if(opponentChoice.is(scissors)) totalScore1 += winPoint
     }
     if(yourChoice.is(paper)) {
         totalScore1 += paperPoint
 
-        if(opponentChoice.is(rock)) totalScore1 += 6
-        if(opponentChoice.is(paper)) totalScore1 += 3
-        if(opponentChoice.is(scissors)) totalScore1 += 0
+        if(opponentChoice.is(rock)) totalScore1 += winPoint
+        if(opponentChoice.is(paper)) totalScore1 += drawPoint
+        if(opponentChoice.is(scissors)) totalScore1 += losePoint
     }
     if(yourChoice.is(scissors)) {
         totalScore1 += scissorsPoint
 
-        if(opponentChoice.is(rock)) totalScore1 += 0
-        if(opponentChoice.is(paper)) totalScore1 += 6
-        if(opponentChoice.is(scissors)) totalScore1 += 3
+        if(opponentChoice.is(rock)) totalScore1 += losePoint
+        if(opponentChoice.is(paper)) totalScore1 += winPoint
+        if(opponentChoice.is(scissors)) totalScore1 += drawPoint
     }
 })
 
