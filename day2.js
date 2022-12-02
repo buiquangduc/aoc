@@ -2530,6 +2530,7 @@ parsedData.forEach(round => {
     const chosenValues = round.split(' ')
     const opponentChoice = chosenValues[0]
     const yourChoice = chosenValues[1]
+    const result = chosenValues[1]
 
     if(yourChoice.is(rock)) {
         totalScore1 += rockPoint
@@ -2552,12 +2553,6 @@ parsedData.forEach(round => {
         if(opponentChoice.is(paper)) totalScore1 += winPoint
         if(opponentChoice.is(scissors)) totalScore1 += drawPoint
     }
-})
-
-parsedData.forEach(round => {
-    const chosenValues = round.split(' ')
-    const opponentChoice = chosenValues[0]
-    const result = chosenValues[1]
 
     if(result.is(win)) {
         totalScore2 += winPoint
