@@ -305,7 +305,7 @@ NWVqqcHHNpsNcNVdVlhCMlHQQMQQzLfzQPttFGPMLSLgtF
 
 const parsedData = rawData.split('\n').filter(data => !!data)
 
-const values = {'a': 1, 'b': 2, 'c': 3, 'd': 4, 'e': 5, 'f': 6, 'g': 7, 'h': 8, 'i': 9, 'j': 10, 'k': 11, 'l': 12, 'm': 13, 'n': 14, 'o': 15, 'p': 16, 'q': 17, 'r': 18, 's': 19, 't': 20, 'u': 21, 'v': 22, 'w': 23, 'x': 24, 'y': 25, 'z': 26, 'A': 27, 'B': 28, 'C': 29, 'D': 30, 'E': 31, 'F': 32, 'G': 33, 'H': 34, 'I': 35, 'J': 36, 'K': 37, 'L': 38, 'M': 39, 'N': 40, 'O': 41, 'P': 42, 'Q': 43, 'R': 44, 'S': 45, 'T': 46, 'U': 47, 'V': 48, 'W': 49, 'X': 50, 'Y': 51, 'Z': 52,}
+const characterValues = {'a': 1, 'b': 2, 'c': 3, 'd': 4, 'e': 5, 'f': 6, 'g': 7, 'h': 8, 'i': 9, 'j': 10, 'k': 11, 'l': 12, 'm': 13, 'n': 14, 'o': 15, 'p': 16, 'q': 17, 'r': 18, 's': 19, 't': 20, 'u': 21, 'v': 22, 'w': 23, 'x': 24, 'y': 25, 'z': 26, 'A': 27, 'B': 28, 'C': 29, 'D': 30, 'E': 31, 'F': 32, 'G': 33, 'H': 34, 'I': 35, 'J': 36, 'K': 37, 'L': 38, 'M': 39, 'N': 40, 'O': 41, 'P': 42, 'Q': 43, 'R': 44, 'S': 45, 'T': 46, 'U': 47, 'V': 48, 'W': 49, 'X': 50, 'Y': 51, 'Z': 52,}
 
 let totalPoint1 = 0
 parsedData.forEach(string => {
@@ -314,7 +314,7 @@ parsedData.forEach(string => {
 
     const matchCharacter = _.intersection(firstString.split(''), secondString.split(''))[0]
 
-    totalPoint1 += values[matchCharacter]
+    totalPoint1 += characterValues[matchCharacter]
 })
 
 let totalPoint2 = 0
@@ -323,7 +323,7 @@ for(let index = 0; index < parsedData.length / 3; index++) {
 
     const matchCharacter = _.intersection(groupStringOf3[0], groupStringOf3[1], groupStringOf3[2])[0]
 
-    totalPoint2 += values[matchCharacter]
+    totalPoint2 += characterValues[matchCharacter]
 }
 
 console.log(totalPoint1)
