@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import './helper.js'
 
 const rawData = `
 49-51,31-50
@@ -1004,29 +1004,6 @@ const rawData = `
 `
 
 const parsedData = rawData.split('\n').filter(data => !!data)
-
-String.prototype.splitRangeToArray = function() {
-    const range = this.split('-')
-    const start = parseInt(range[0])
-    const end = parseInt(range[1])
-
-    let array = []
-    for (let i = start; i <= end; i++) array.push(i)
-
-    return array
-}
-
-Array.prototype.getOverlapArray = function(otherArray) {
-    return this.filter(value => otherArray.includes(value))
-}
-
-Array.prototype.isOverlap = function(otherArray) {
-    return this.getOverlapArray(otherArray).length > 0
-}
-
-Array.prototype.isContains = function(otherArray) {
-    return _.difference(this, otherArray).length === 0
-}
 
 let totalOverlap = 0
 let totalContains = 0

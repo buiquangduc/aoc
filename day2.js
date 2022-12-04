@@ -1,3 +1,5 @@
+import './helper.js'
+
 const rawData = `
 A X
 A Z
@@ -2517,14 +2519,6 @@ const winPoint = 6
 const rockPoint = 1
 const paperPoint = 2
 const scissorsPoint = 3
-
-String.prototype.is = function (data) {
-    if(Array.isArray(data)) {
-        return data.indexOf(this) !== -1
-    } else {
-        return this === data
-    }
-}
 
 parsedData.forEach(round => {
     const chosenValues = round.split(' ')
