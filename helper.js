@@ -30,3 +30,21 @@ Array.prototype.isOverlap = function(otherArray) {
 Array.prototype.isContains = function(otherArray) {
     return _.difference(this, otherArray).length === 0
 }
+
+export const aZtoObjectValue = (increment) => {
+    let object = {}
+    let aZ = 'a-b-c-d-e-f-g-h-i-j-k-l-m-n-o-p-q-r-s-t-u-v-w-x-y-z-A-B-C-D-E-F-G-H-I-J-K-L-M-N-O-P-Q-R-S-T-U-V-W-X-Y-Z'
+    let aZArray = aZ.split('-')
+
+    aZArray.forEach((character, index) => {
+        object[character] = (index + 1) * increment
+    })
+
+    return object
+}
+
+export const getUniqueIndex = (data, length) => {
+    for(let i = length; i <= data.length; i++) {
+        if(_.uniq(data.slice(i - length, i)).length === length) return i
+    }
+}
