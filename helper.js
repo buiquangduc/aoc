@@ -43,8 +43,10 @@ export const aZtoObjectValue = (increment) => {
     return object
 }
 
-export const getUniqueIndex = (data, length) => {
-    for(let i = length; i <= data.length; i++) {
-        if(_.uniq(data.slice(i - length, i)).length === length) return i
+Array.prototype.getFirstUniqueIndex = function(lengthToCut) {
+    for(let i = lengthToCut; i <= this.length; i++) {
+        if(_.uniq(this.slice(i - lengthToCut, i)).length === lengthToCut) return i
     }
+
+    return null
 }
