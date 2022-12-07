@@ -1118,18 +1118,31 @@ $ ls
 const parsedData = rawData.split('\n').filter(data => !!data)
 let directoriesWithSize = []
 
-const calculateAndStoreDirectoriesSize = (object) => {
+const calculateAndStoreDirectoriesSize = (object, directoryName) => {
     let totalSize = 0
 
     Object.keys(object).forEach(key => {
-        if(key !== 'files') totalSize += calculateAndStoreDirectoriesSize(_.get(object, key))
+        if(key !== 'files') totalSize += calculateAndStoreDirectoriesSize(_.get(object, key), key)
     })
 
-    totalSize += _.sum(object.files)
+    totalSize += _.sumBy(object.files, 'size')
 
-    directoriesWithSize.push(totalSize)
+    directoriesWithSize.push({ name: directoryName, size: totalSize })
 
     return totalSize
+}
+
+const renderTree = (object, prefix) => {
+    let treeString = ''
+
+    Object.keys(object).forEach(key => {
+        if(key !== 'files') {
+            treeString += `\n${prefix} ${key} (dir)` + renderTree(_.get(object, key), prefix + '-')
+        }
+    })
+    treeString += object.files.map(({ name, size }) => `\n${prefix} ${name} (file, size=${size})`).join('')
+
+    return treeString
 }
 
 let directoriesFormatted = { files: [] }
@@ -1164,8 +1177,9 @@ parsedData.forEach(data => {
             directoriesFormatted = _.set(directoriesFormatted, [...currentPathStacks, dirName], { files: [] })
         } else {
             const fileSize = parseFloat(output[0])
+            const fileName = output[1]
 
-            const newValues = [..._.get(directoriesFormatted, [...currentPathStacks, 'files']), fileSize]
+            const newValues = [..._.get(directoriesFormatted, [...currentPathStacks, 'files']), { size: fileSize, name: fileName}]
 
             directoriesFormatted = _.set(directoriesFormatted, [...currentPathStacks, 'files'], newValues)
         }
@@ -1175,12 +1189,13 @@ parsedData.forEach(data => {
 const sizeToUpdate = 30000000
 const totalDiskSize = 70000000
 
-const totalSize = calculateAndStoreDirectoriesSize(directoriesFormatted)
-const directoriesSortedBySize = _.sortBy(directoriesWithSize)
+const totalSize = calculateAndStoreDirectoriesSize(directoriesFormatted, '')
+const directoriesSortedBySize = _.sortBy(directoriesWithSize, 'size')
 const currentSizeLeft = totalDiskSize - totalSize
 
-const directoriesAtMost100000 = directoriesSortedBySize.filter(size => size <= 100000)
-const directorySizeToDelete = directoriesSortedBySize.filter(size => size >= sizeToUpdate - currentSizeLeft)[0]
+const directoriesAtMost100000 = directoriesSortedBySize.filter(({ size }) => size <= 100000)
+const directoryToDelete = directoriesSortedBySize.filter(({ size }) => size >= sizeToUpdate - currentSizeLeft)[0]
 
-console.log(_.sum(directoriesAtMost100000))
-console.log(directorySizeToDelete)
+console.log(_.sumBy(directoriesAtMost100000, 'size'))
+console.log(directoryToDelete.size)
+console.log(renderTree(directoriesFormatted, '-'))
