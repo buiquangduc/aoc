@@ -1093,29 +1093,72 @@ $ ls
 const rawDataTest = `
 $ cd /
 $ ls
-dir a
-14848514 b.txt
-8504156 c.dat
-dir d
-$ cd a
+dir bfbjzfd
+dir mbc
+dir psqmv
+dir qqpgw
+59022 rrqzqwl.frp
+dir sscj
+dir vpfdwq
+dir zzp
+$ cd bfbjzfd
 $ ls
-dir e
-29116 f
-2557 g
-62596 h.lst
-$ cd e
+125000 bmzjjgzc.dcr
+dir brmgzjp
+165351 hgm
+dir rhrqttg
+dir zfdc
+$ cd brmgzjp
 $ ls
-584 i
+298676 zzp.wrm
+$ cd ..
+$ cd rhrqttg
+$ ls
+dir hmz
+dir hpcrbfq
+$ cd hmz
+$ ls
+297949 lqcg
+$ cd ..
+$ cd hpcrbfq
+$ ls
+dir ghmfgn
+dir pnhcpprn
+dir wgvqhw
+$ cd ghmfgn
+$ ls
+dir rrfg
+dir tggwct
+$ cd rrfg
+$ ls
+240584 svzjf
+$ cd ..
+$ cd tggwct
+$ ls
+dir lqmrbncv
+$ cd lqmrbncv
+$ ls
+268356 zlw.tsd
 $ cd ..
 $ cd ..
-$ cd d
+$ cd ..
+$ cd pnhcpprn
 $ ls
-4060174 j
-8033020 d.log
-5626152 d.ext
-7214296 k`
+138460 sjth.rhr
+$ cd ..
+$ cd wgvqhw
+$ ls
+144558 zphv.mwp
+$ cd ..
+$ cd ..
+$ cd ..
+$ cd zfdc
+$ ls
+173854 fgj.fhz
+233205 vwrmp.rzc
+`
 
-const parsedData = rawData.split('\n').filter(data => !!data)
+const parsedData = rawDataTest.split('\n').filter(data => !!data)
 let directoriesWithSize = []
 
 const calculateAndStoreDirectoriesSize = (object, directoryName) => {
@@ -1193,7 +1236,7 @@ const totalSize = calculateAndStoreDirectoriesSize(directoriesFormatted, '')
 const directoriesSortedBySize = _.sortBy(directoriesWithSize, 'size')
 const currentSizeLeft = totalDiskSize - totalSize
 
-const directoriesAtMost100000 = directoriesSortedBySize.filter(({ size }) => size <= 100000)
+const directoriesAtMost100000 = directoriesSortedBySize.filter(({ size }) => size <= 200000)
 const directoryToDelete = directoriesSortedBySize.filter(({ size }) => size >= sizeToUpdate - currentSizeLeft)[0]
 
 console.log(_.sumBy(directoriesAtMost100000, 'size'))
