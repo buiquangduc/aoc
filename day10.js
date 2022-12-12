@@ -28,6 +28,34 @@ addx -19
 addx 1
 addx 16
 addx -11
+`
+const rawDataTest2 = `
+addx 15
+addx -11
+addx 6
+addx -3
+addx 5
+addx -1
+addx -8
+addx 13
+addx 4
+noop
+addx -1
+addx 5
+addx -1
+addx 5
+addx -1
+addx 5
+addx -1
+addx 5
+addx -1
+addx -35
+addx 1
+addx 24
+addx -19
+addx 1
+addx 16
+addx -11
 noop
 noop
 addx 21
@@ -149,6 +177,7 @@ noop
 noop
 noop
 `
+
 const rawData = `
 noop
 noop
@@ -293,43 +322,60 @@ noop
 `
 
 let loops = []
+let loops2 = []
 let signalStrength = 0
 
 const parsedData = rawData.split('\n').filter(data => !!data)
 
-parsedData.forEach(data => {
-    const output = data.split(' ')
-    const isNoop = output[0] === 'noop'
+parsedData.forEach(line => {
+    const cmd = line.split(' ')
 
-    if(isNoop) {
-        loops.push([0, 0])
-    } else {
-        loops.push([0, 0])
-        loops.push([0, parseInt(output[1])])
+    loops.push(0)
+
+    if(cmd.length === 2) {
+        loops.push(parseInt(cmd[1]))
+        loops2.push(parseInt(cmd[1]))
     }
 })
 
 let loopsDivided = []
 
-for (let i = 0; i <= 5; i++) {
-    loopsDivided.push(_.slice(loops, 0, (40 * i) + 20));
-}
+for (let i = 0; i <= 5; i++) loopsDivided.push(_.slice(loops, 0, (40 * i) + 20))
 
-loopsDivided.forEach((data) => {
+loopsDivided.forEach((loop) => {
     let total = 1
 
-    data.forEach((loop, index) => {
-        const during = loop[0]
-        const end = loop[1]
+    loop.forEach((step, index) => total += index === loop.length - 1 ? 0 : step)
 
-        if(index === data.length - 1) {
-            total += during
-        } else {
-            total += end
-        }
-    })
-
-    signalStrength += data.length * total
+    signalStrength += loop.length * total
 })
 
-console.log(signalStrength)
+
+let sprite = "###.....................................".split("");
+let current = "";
+let cycle = 0;
+let X = 0;
+parsedData.forEach((line) => {
+    const cmd = line.split(" ");
+    cycle++;
+
+    if (cmd.length === 1) {
+        current += sprite[(cycle - 1) % 40] === "#" ? "#" : ".";
+    } else if (cmd.length === 2) {
+        current += sprite[(cycle - 1) % 40] === "#" ? "#" : ".";
+
+        cycle++;
+
+        current += sprite[(cycle - 1) % 40] === "#" ? "#" : "."
+
+        sprite[X] = ".";
+        sprite[X + 1] = ".";
+        sprite[X + 2] = ".";
+        X += parseInt(cmd[1]);
+        sprite[X] = "#";
+        sprite[X + 1] = "#";
+        sprite[X + 2] = "#";
+    }
+});
+
+console.log(_.chunk(current, 40).map(array => array.join('')))
